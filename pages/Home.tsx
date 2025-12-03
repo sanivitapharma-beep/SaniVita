@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Page, Product } from '../types';
-import { ArrowRight, Activity, ShieldCheck, Leaf, Users } from 'lucide-react';
+import { ArrowRight, Activity, ShieldCheck, Leaf } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
 import ProductModal from '../components/ProductModal';
 import { products } from '../data/products';
@@ -131,34 +131,6 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
             >
               عرض جميع المنتجات
             </button>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats/Trust Section */}
-      <section className="py-20 bg-primary-900 text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-900 via-primary-800 to-accent-900 opacity-90"></div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-             <div>
-               <div className="text-4xl lg:text-5xl font-extrabold text-secondary-500 mb-2">+50</div>
-               <div className="text-primary-100 font-medium">منتج طبيعي</div>
-             </div>
-             <div>
-               <div className="text-4xl lg:text-5xl font-extrabold text-secondary-500 mb-2">+10k</div>
-               <div className="text-primary-100 font-medium">عميل سعيد</div>
-             </div>
-             <div>
-               <div className="text-4xl lg:text-5xl font-extrabold text-secondary-500 mb-2">15</div>
-               <div className="text-primary-100 font-medium">سنة خبرة</div>
-             </div>
-             <div>
-               <div className="text-4xl lg:text-5xl font-extrabold text-secondary-500 mb-2">100%</div>
-               <div className="text-primary-100 font-medium">رضا العملاء</div>
-             </div>
           </div>
         </div>
       </section>
