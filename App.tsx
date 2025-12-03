@@ -122,7 +122,11 @@ const App: React.FC = () => {
         );
       case Page.PRODUCT_DETAIL:
         return selectedProduct ? (
-          <ProductDetail product={selectedProduct} onNavigate={setCurrentPage} />
+          <ProductDetail 
+            product={selectedProduct} 
+            onNavigate={setCurrentPage} 
+            onSelectProduct={handleProductSelect}
+          />
         ) : (
           <ProductsPage onSelectProduct={handleProductSelect} />
         );

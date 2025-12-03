@@ -1,24 +1,30 @@
 
 import React, { useEffect, useState } from 'react';
 import { Product, Page } from '../types';
+import { products } from '../data/products';
 import { 
     ArrowRight, CheckCircle, Store, Tag, Info, Star, Wind, Shield, Activity, 
     Heart, Sparkles, Zap, Package, Facebook, Twitter, MessageCircle, 
-    Link as LinkIcon, Check, Linkedin 
+    Link as LinkIcon, Check, Linkedin, ChevronRight, ChevronLeft 
 } from 'lucide-react';
 
 interface ProductDetailProps {
   product: Product;
   onNavigate: (page: Page) => void;
+  onSelectProduct: (product: Product) => void;
 }
 
-const ProductDetail: React.FC<ProductDetailProps> = ({ product, onNavigate }) => {
+const ProductDetail: React.FC<ProductDetailProps> = ({ product, onNavigate, onSelectProduct }) => {
   const [copied, setCopied] = useState(false);
 
-  // Scroll to top when component mounts
+  // Scroll to top when component mounts or product changes
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [product]);
+
+  const currentIndex = products.findIndex(p => p.id === product.id);
+  const nextProduct = products[(currentIndex + 1) % products.length];
+  const prevProduct = products[(currentIndex - 1 + products.length) % products.length];
 
   const iconMap: Record<string, React.ElementType> = {
     wind: Wind,
@@ -75,21 +81,41 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onNavigate }) =>
     <div className="min-h-screen bg-slate-50 pb-20">
       
       {/* Hero / Header Section */}
-      <div className="bg-gradient-to-br from-primary-900 to-primary-700 pt-28 pb-32 relative overflow-hidden">
+      <div className="bg-gradient-to-br from-primary-500 to-primary-700 pt-28 pb-32 relative overflow-hidden">
         {/* Background Patterns */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-secondary-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-secondary-500/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-primary-900/10"></div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-             {/* Back Button */}
-            <div className="mb-8">
+             {/* Navigation Bar */}
+            <div className="mb-8 flex flex-wrap gap-4 justify-between items-center">
                 <button 
                     onClick={() => onNavigate(Page.PRODUCTS)}
-                    className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-full flex items-center gap-2 transition-all font-bold text-sm border border-white/20 backdrop-blur-sm w-fit"
+                    className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-full flex items-center gap-2 transition-all font-bold text-sm border border-white/20 backdrop-blur-sm"
                 >
                     <ArrowRight className="w-4 h-4" />
                     العودة للمنتجات
                 </button>
+
+                <div className="flex gap-3">
+                    <button 
+                        onClick={() => onSelectProduct(prevProduct)}
+                        className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-full flex items-center gap-2 transition-all font-bold text-sm border border-white/20 backdrop-blur-sm group"
+                        title="المنتج السابق"
+                    >
+                        <ChevronRight className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                        <span className="hidden sm:inline">السابق</span>
+                    </button>
+                    <button 
+                        onClick={() => onSelectProduct(nextProduct)}
+                        className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-full flex items-center gap-2 transition-all font-bold text-sm border border-white/20 backdrop-blur-sm group"
+                        title="المنتج التالي"
+                    >
+                        <span className="hidden sm:inline">التالي</span>
+                        <ChevronLeft className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                    </button>
+                </div>
             </div>
 
             <div className="flex flex-col md:flex-row items-center gap-12">
@@ -119,7 +145,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onNavigate }) =>
                         {product.name}
                     </h1>
                     
-                    <p className="text-xl text-primary-100 leading-relaxed max-w-2xl mx-auto md:mx-0 font-medium">
+                    <p className="text-xl text-primary-50 leading-relaxed max-w-2xl mx-auto md:mx-0 font-medium">
                         {product.description}
                     </p>
                 </div>
