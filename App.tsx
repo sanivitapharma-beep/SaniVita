@@ -10,6 +10,7 @@ import SmartAdvisor from './pages/SmartAdvisor';
 import ArticlesList from './pages/ArticlesList';
 import ArticleDetail from './pages/ArticleDetail';
 import ProductDetail from './pages/ProductDetail';
+import ScrollToTop from './components/ScrollToTop';
 import { Page, Article, Product } from './types';
 import { articles } from './data/articles';
 import { products } from './data/products';
@@ -142,6 +143,7 @@ const App: React.FC = () => {
       </main>
 
       <Footer onNavigate={setCurrentPage} />
+      <ScrollToTop />
     </div>
   );
 };
