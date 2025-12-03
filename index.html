@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SaniVita Pharma | ساني فيتا فارما</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Tajawal', 'sans-serif'],
+            },
+            colors: {
+              primary: {
+                50: '#eef0ff',
+                100: '#e0e3ff',
+                200: '#c2c9ff',
+                300: '#94a0ff',
+                400: '#6070fa',
+                500: '#4552e6', 
+                600: '#2e3192', // Base Dark Blue #2e3192
+                700: '#25277a',
+                800: '#1f2163',
+                900: '#1a1b52',
+                950: '#0f1035',
+              },
+              secondary: {
+                50: '#fff8eb',
+                100: '#ffecd6',
+                200: '#ffd5ad',
+                300: '#ffbd85',
+                400: '#ffa55c',
+                500: '#fd9f19', // Base Orange #fd9f19
+                600: '#e68200',
+                700: '#cc6a00',
+                800: '#a35000',
+                900: '#854000',
+              },
+              accent: {
+                50: '#e0f7ff',
+                100: '#b3ecff',
+                200: '#80dfff',
+                300: '#4dd2ff',
+                400: '#1ac5ff',
+                500: '#029ae2', // Base Light Blue #029ae2
+                600: '#027bb5',
+                700: '#025c87',
+                800: '#013d5a',
+                900: '#011f2d',
+              }
+            }
+          },
+        },
+      }
+    </script>
+    <style>
+      /* Smooth scrolling */
+      html {
+        scroll-behavior: smooth;
+      }
+      /* Hide scrollbar for clean look in chat */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      /* Modal Animation */
+      @keyframes modalFadeIn {
+        from { opacity: 0; transform: scale(0.95); }
+        to { opacity: 1; transform: scale(1); }
+      }
+      .animate-modal {
+        animation: modalFadeIn 0.2s ease-out forwards;
+      }
+      /* Custom Scrollbar for Modal */
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: #f1f5f9;
+        border-radius: 4px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background-color: #cbd5e1;
+        border-radius: 20px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background-color: #94a3b8;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0"
+  }
+}
+</script>
+</head>
+  <body class="bg-slate-50 text-slate-800 antialiased font-sans">
+    <div id="root"></div>
+  </body>
+</html>
