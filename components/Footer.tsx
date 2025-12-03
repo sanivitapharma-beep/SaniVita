@@ -52,11 +52,11 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <ul className="space-y-4">
               <li className="flex items-start">
                 <MapPin className="w-5 h-5 text-secondary-500 ml-3 mt-1 flex-shrink-0" />
-                <span className="text-primary-200">123 شارع الصحة، المنطقة الصناعية، القاهرة الجديدة</span>
+                <span className="text-primary-200">26 شارع محمود البكري مدينة الجندول الزاويه الحمراء القاهرة</span>
               </li>
               <li className="flex items-center">
                 <Phone className="w-5 h-5 text-secondary-500 ml-3 flex-shrink-0" />
-                <span className="text-primary-200">+20 123 456 7890</span>
+                <span className="text-primary-200">+20 1009760524</span>
               </li>
               <li className="flex items-center">
                 <Mail className="w-5 h-5 text-secondary-500 ml-3 flex-shrink-0" />
