@@ -11,7 +11,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   return (
     <footer className="bg-primary-900 text-white pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-12">
           
           {/* Brand Info */}
           <div>
@@ -63,22 +63,6 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 <span className="text-primary-200">info@sanivita.com</span>
               </li>
             </ul>
-          </div>
-
-          {/* Newsletter */}
-          <div>
-            <h3 className="text-lg font-bold mb-6 text-accent-400">النشرة البريدية</h3>
-            <p className="text-primary-200 mb-4 text-sm">اشترك للحصول على آخر النصائح الصحية والعروض.</p>
-            <form className="flex flex-col gap-2" onSubmit={(e) => e.preventDefault()}>
-              <input 
-                type="email" 
-                placeholder="بريدك الإلكتروني" 
-                className="bg-primary-800 border border-primary-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:border-secondary-500"
-              />
-              <button className="bg-secondary-500 hover:bg-secondary-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
-                اشترك الآن
-              </button>
-            </form>
           </div>
 
         </div>
