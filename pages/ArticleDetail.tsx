@@ -16,17 +16,13 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onNavigate }) =>
     window.scrollTo(0, 0);
   }, []);
 
-  const getCurrentUrl = () => {
-    // In a real production environment, window.location.href works. 
-    // Here we provide a fallback for demo/sandbox environments to ensure a valid URL structure.
-    const url = window.location.href;
-    return url.startsWith('http') && !url.includes('localhost') && !url.includes('127.0.0.1') 
-        ? url 
-        : `https://sanivita-pharma.com/articles/${article.id}`;
+  const getShareUrl = () => {
+    // Construct a URL with query parameters that the App.tsx routing logic understands
+    return `${window.location.origin}?page=article_detail&id=${article.id}`;
   };
 
   const handleShare = (platform: string) => {
-    const url = encodeURIComponent(getCurrentUrl());
+    const url = encodeURIComponent(getShareUrl());
     const text = encodeURIComponent(article.title);
     let shareUrl = '';
 
@@ -52,7 +48,7 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onNavigate }) =>
 
   const copyToClipboard = async () => {
     try {
-        await navigator.clipboard.writeText(getCurrentUrl());
+        await navigator.clipboard.writeText(getShareUrl());
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
     } catch (err) {
