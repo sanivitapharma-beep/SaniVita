@@ -1,7 +1,10 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Product } from '../types';
-import { CheckCircle, ArrowRight, Share2, Wind, Shield, Activity, Heart, Sparkles, Zap, Package } from 'lucide-react';
+import { 
+  CheckCircle, ArrowRight, Share2, Wind, Shield, Activity, 
+  Heart, Sparkles, Zap, Package, Facebook, Twitter, Link as LinkIcon, Check, MessageCircle 
+} from 'lucide-react';
 
 interface ProductCardProps {
   product: Product;
@@ -9,6 +12,8 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, onViewDetails }) => {
+  const [showShareMenu, setShowShareMenu] = useState(false);
+  const [copied, setCopied] = useState(false);
   
   const iconMap: Record<string, React.ElementType> = {
     wind: Wind,
@@ -22,38 +27,86 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onViewDetails }) => 
 
   const IconComponent = iconMap[product.icon] || Package;
 
-  const handleShare = async (e: React.MouseEvent) => {
+  const getShareUrl = () => {
+    // Return the website URL for sharing purposes
+    return 'https://sanivita-pharma.com';
+  };
+
+  const handleSocialShare = (platform: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    
-    // Ensure we have a valid URL protocol for sharing.
-    // In some sandbox environments, window.location.href might be 'about:srcdoc' which navigator.share rejects.
-    let shareUrl = window.location.href;
-    if (!shareUrl.startsWith('http')) {
-        shareUrl = 'https://sanivita-pharma.com'; // Fallback URL for demo/sandbox
+    const url = encodeURIComponent(getShareUrl());
+    const text = encodeURIComponent(`اكتشف ${product.name} من SaniVita Pharma: ${product.description}`);
+    let shareUrl = '';
+
+    switch (platform) {
+      case 'facebook':
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+        break;
+      case 'twitter':
+        shareUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+        break;
+      case 'whatsapp':
+        shareUrl = `https://wa.me/?text=${text}%20${url}`;
+        break;
     }
 
-    const shareData = {
-      title: product.name,
-      text: `اكتشف ${product.name} من SaniVita Pharma: ${product.description}`,
-      url: shareUrl
-    };
-
-    try {
-      if (navigator.share) {
-        await navigator.share(shareData);
-      } else {
-        throw new Error('Share API not supported');
-      }
-    } catch (err) {
-      console.log('Error sharing:', err);
-      // Fallback
-      navigator.clipboard.writeText(`${shareData.title}\n${shareData.text}\n${shareData.url}`);
-      alert('تم نسخ معلومات المنتج للحافظة');
+    if (shareUrl) {
+      window.open(shareUrl, '_blank', 'width=600,height=400');
     }
+    setShowShareMenu(false);
+  };
+
+  const handleCopyLink = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const textToCopy = `${product.name}\n${product.description}\n${getShareUrl()}`;
+    navigator.clipboard.writeText(textToCopy).then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+        setTimeout(() => setShowShareMenu(false), 2000);
+    });
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 overflow-visible flex flex-col h-full group relative">
+    <div 
+      className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 overflow-visible flex flex-col h-full group relative"
+      onMouseLeave={() => setShowShareMenu(false)}
+    >
+      {/* Share Button & Dropdown */}
+      <div className="absolute top-4 left-4 z-30">
+          <button 
+              onClick={(e) => { e.stopPropagation(); setShowShareMenu(!showShareMenu); }}
+              className="bg-white/90 hover:bg-secondary-50 p-2 rounded-full text-slate-400 hover:text-secondary-500 shadow-sm border border-slate-100 transition-colors"
+              aria-label="مشاركة المنتج"
+          >
+              <Share2 className="w-4 h-4" />
+          </button>
+
+          {/* Share Menu */}
+          {showShareMenu && (
+              <div className="absolute top-full left-0 mt-2 bg-white rounded-xl shadow-xl border border-slate-100 p-2 flex flex-col gap-1 min-w-[40px] animate-modal z-40">
+                  <button onClick={(e) => handleSocialShare('facebook', e)} className="p-2 hover:bg-blue-50 rounded-lg text-[#1877F2] transition-colors" title="Facebook">
+                      <Facebook className="w-4 h-4" />
+                  </button>
+                  <button onClick={(e) => handleSocialShare('twitter', e)} className="p-2 hover:bg-sky-50 rounded-lg text-[#1DA1F2] transition-colors" title="Twitter">
+                      <Twitter className="w-4 h-4" />
+                  </button>
+                  <button onClick={(e) => handleSocialShare('whatsapp', e)} className="p-2 hover:bg-green-50 rounded-lg text-[#25D366] transition-colors" title="WhatsApp">
+                      <MessageCircle className="w-4 h-4" />
+                  </button>
+                  <button onClick={handleCopyLink} className="p-2 hover:bg-slate-50 rounded-lg text-slate-600 transition-colors" title="نسخ الرابط">
+                      {copied ? <Check className="w-4 h-4 text-green-500" /> : <LinkIcon className="w-4 h-4" />}
+                  </button>
+              </div>
+          )}
+      </div>
+
+      {/* Category Badge - Moved outside to prevent clipping and allow click-through */}
+      <div className="absolute top-4 right-4 z-20 pointer-events-none">
+        <div className="bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-primary-700 shadow-sm border border-slate-100">
+          {product.category}
+        </div>
+      </div>
+      
       <div 
         className="relative h-64 overflow-hidden bg-white cursor-pointer p-4 flex items-center justify-center rounded-t-2xl"
         onClick={() => onViewDetails(product)}
@@ -64,18 +117,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onViewDetails }) => 
           referrerPolicy="no-referrer"
           className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
         />
-        <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-primary-700 shadow-sm border border-slate-100">
-          {product.category}
-        </div>
-        
-        {/* Share Button */}
-        <button 
-            onClick={handleShare}
-            className="absolute top-4 left-4 bg-white/90 hover:bg-secondary-50 p-2 rounded-full text-slate-400 hover:text-secondary-500 shadow-sm border border-slate-100 transition-colors z-10"
-            aria-label="مشاركة المنتج"
-        >
-            <Share2 className="w-4 h-4" />
-        </button>
       </div>
       
       <div className="p-6 flex-1 flex flex-col border-t border-slate-50 relative">

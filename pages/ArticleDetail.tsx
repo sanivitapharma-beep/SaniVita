@@ -1,7 +1,7 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Article, Page } from '../types';
-import { Calendar, User, Clock, ArrowRight, Share2, Tag } from 'lucide-react';
+import { Calendar, User, Clock, ArrowRight, Tag, Facebook, Twitter, Linkedin, Link as LinkIcon, Check, MessageCircle } from 'lucide-react';
 
 interface ArticleDetailProps {
   article: Article;
@@ -9,11 +9,56 @@ interface ArticleDetailProps {
 }
 
 const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onNavigate }) => {
+  const [copied, setCopied] = useState(false);
   
   // Scroll to top when component mounts
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const getCurrentUrl = () => {
+    // In a real production environment, window.location.href works. 
+    // Here we provide a fallback for demo/sandbox environments to ensure a valid URL structure.
+    const url = window.location.href;
+    return url.startsWith('http') && !url.includes('localhost') && !url.includes('127.0.0.1') 
+        ? url 
+        : `https://sanivita-pharma.com/articles/${article.id}`;
+  };
+
+  const handleShare = (platform: string) => {
+    const url = encodeURIComponent(getCurrentUrl());
+    const text = encodeURIComponent(article.title);
+    let shareUrl = '';
+
+    switch (platform) {
+      case 'facebook':
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+        break;
+      case 'twitter':
+        shareUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+        break;
+      case 'linkedin':
+        shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+        break;
+      case 'whatsapp':
+        shareUrl = `https://wa.me/?text=${text}%20${url}`;
+        break;
+    }
+
+    if (shareUrl) {
+      window.open(shareUrl, '_blank', 'width=600,height=400');
+    }
+  };
+
+  const copyToClipboard = async () => {
+    try {
+        await navigator.clipboard.writeText(getCurrentUrl());
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+        console.error('Failed to copy', err);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white pb-20">
@@ -72,17 +117,66 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onNavigate }) =>
       <div className="max-w-3xl mx-auto px-4 py-12 -mt-10 relative z-10">
         <div className="bg-white rounded-t-3xl md:rounded-3xl p-6 md:p-12 shadow-xl border border-slate-100">
             
-            {/* Share Buttons (Placeholder) */}
-            <div className="flex justify-between items-center border-b border-slate-100 pb-8 mb-8">
+            {/* Share Buttons */}
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-100 pb-8 mb-8 gap-4">
                 <div className="flex items-center gap-2 text-slate-500 text-sm font-bold">
                     <Tag className="w-4 h-4" />
                     <span>كلمات مفتاحية:</span>
                     <span className="text-primary-600">صحة، {article.category}، وقاية</span>
                 </div>
-                <button className="text-slate-400 hover:text-primary-600 transition-colors flex items-center gap-2 text-sm font-bold">
-                    <Share2 className="w-4 h-4" />
-                    مشاركة المقال
-                </button>
+                
+                <div className="flex items-center gap-3 self-end md:self-auto">
+                    <span className="text-slate-400 text-sm font-bold ml-2">مشاركة:</span>
+                    
+                    {/* Facebook */}
+                    <button 
+                        onClick={() => handleShare('facebook')} 
+                        className="w-9 h-9 rounded-full bg-[#1877F2]/10 text-[#1877F2] flex items-center justify-center hover:bg-[#1877F2] hover:text-white transition-all shadow-sm" 
+                        title="مشاركة على فيسبوك"
+                    >
+                        <Facebook className="w-4 h-4" />
+                    </button>
+
+                    {/* Twitter */}
+                    <button 
+                        onClick={() => handleShare('twitter')} 
+                        className="w-9 h-9 rounded-full bg-[#1DA1F2]/10 text-[#1DA1F2] flex items-center justify-center hover:bg-[#1DA1F2] hover:text-white transition-all shadow-sm" 
+                        title="مشاركة على تويتر"
+                    >
+                        <Twitter className="w-4 h-4" />
+                    </button>
+
+                    {/* WhatsApp */}
+                    <button 
+                        onClick={() => handleShare('whatsapp')} 
+                        className="w-9 h-9 rounded-full bg-[#25D366]/10 text-[#25D366] flex items-center justify-center hover:bg-[#25D366] hover:text-white transition-all shadow-sm" 
+                        title="مشاركة على واتساب"
+                    >
+                        <MessageCircle className="w-4 h-4" />
+                    </button>
+
+                     {/* LinkedIn */}
+                     <button 
+                        onClick={() => handleShare('linkedin')} 
+                        className="w-9 h-9 rounded-full bg-[#0A66C2]/10 text-[#0A66C2] flex items-center justify-center hover:bg-[#0A66C2] hover:text-white transition-all shadow-sm" 
+                        title="مشاركة على لينكد إن"
+                    >
+                        <Linkedin className="w-4 h-4" />
+                    </button>
+
+                    {/* Copy Link */}
+                    <button 
+                        onClick={copyToClipboard} 
+                        className={`w-9 h-9 rounded-full flex items-center justify-center transition-all shadow-sm ${
+                            copied 
+                            ? 'bg-green-100 text-green-600 hover:bg-green-600 hover:text-white' 
+                            : 'bg-slate-100 text-slate-600 hover:bg-slate-600 hover:text-white'
+                        }`} 
+                        title="نسخ الرابط"
+                    >
+                        {copied ? <Check className="w-4 h-4" /> : <LinkIcon className="w-4 h-4" />}
+                    </button>
+                </div>
             </div>
 
             {/* Paragraphs */}
