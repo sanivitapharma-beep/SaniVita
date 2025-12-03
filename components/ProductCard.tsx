@@ -28,13 +28,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onViewDetails }) => 
   const IconComponent = iconMap[product.icon] || Package;
 
   const getShareUrl = () => {
-    // Return the website URL for sharing purposes
-    return 'https://sanivita-pharma.com';
+    // Generate a deep link to the specific product page
+    return `${window.location.origin}?page=product_detail&id=${product.id}`;
   };
 
   const handleSocialShare = (platform: string, e: React.MouseEvent) => {
     e.stopPropagation();
     const url = encodeURIComponent(getShareUrl());
+    // Include product name and description in the shared text
     const text = encodeURIComponent(`اكتشف ${product.name} من SaniVita Pharma: ${product.description}`);
     let shareUrl = '';
 
@@ -58,6 +59,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onViewDetails }) => 
 
   const handleCopyLink = (e: React.MouseEvent) => {
     e.stopPropagation();
+    // Copy full details with the specific link
     const textToCopy = `${product.name}\n${product.description}\n${getShareUrl()}`;
     navigator.clipboard.writeText(textToCopy).then(() => {
         setCopied(true);

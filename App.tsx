@@ -9,12 +9,15 @@ import Contact from './pages/Contact';
 import SmartAdvisor from './pages/SmartAdvisor';
 import ArticlesList from './pages/ArticlesList';
 import ArticleDetail from './pages/ArticleDetail';
-import { Page, Article } from './types';
+import ProductDetail from './pages/ProductDetail';
+import { Page, Article, Product } from './types';
 import { articles } from './data/articles';
+import { products } from './data/products';
 
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<Page>(Page.HOME);
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   // Initialize state from URL parameters on mount
   useEffect(() => {
@@ -27,6 +30,12 @@ const App: React.FC = () => {
       if (foundArticle) {
         setSelectedArticle(foundArticle);
         setCurrentPage(Page.ARTICLE_DETAIL);
+      }
+    } else if (pageParam === 'product_detail' && idParam) {
+      const foundProduct = products.find(p => p.id === idParam);
+      if (foundProduct) {
+        setSelectedProduct(foundProduct);
+        setCurrentPage(Page.PRODUCT_DETAIL);
       }
     } else if (pageParam && Object.values(Page).includes(pageParam as Page)) {
       setCurrentPage(pageParam as Page);
@@ -44,12 +53,20 @@ const App: React.FC = () => {
           setSelectedArticle(foundArticle);
           setCurrentPage(Page.ARTICLE_DETAIL);
         }
+      } else if (pageParam === 'product_detail' && idParam) {
+        const foundProduct = products.find(p => p.id === idParam);
+        if (foundProduct) {
+          setSelectedProduct(foundProduct);
+          setCurrentPage(Page.PRODUCT_DETAIL);
+        }
       } else if (pageParam && Object.values(Page).includes(pageParam as Page)) {
         setCurrentPage(pageParam as Page);
         setSelectedArticle(null);
+        setSelectedProduct(null);
       } else {
         setCurrentPage(Page.HOME);
         setSelectedArticle(null);
+        setSelectedProduct(null);
       }
     };
 
@@ -67,6 +84,9 @@ const App: React.FC = () => {
     if (currentPage === Page.ARTICLE_DETAIL && selectedArticle) {
       url.searchParams.set('page', 'article_detail');
       url.searchParams.set('id', selectedArticle.id);
+    } else if (currentPage === Page.PRODUCT_DETAIL && selectedProduct) {
+      url.searchParams.set('page', 'product_detail');
+      url.searchParams.set('id', selectedProduct.id);
     } else if (currentPage !== Page.HOME) {
       url.searchParams.set('page', currentPage);
     }
@@ -75,14 +95,19 @@ const App: React.FC = () => {
     if (window.location.href !== url.toString()) {
       window.history.pushState({}, '', url);
     }
-  }, [currentPage, selectedArticle]);
+  }, [currentPage, selectedArticle, selectedProduct]);
+
+  const handleProductSelect = (product: Product) => {
+      setSelectedProduct(product);
+      setCurrentPage(Page.PRODUCT_DETAIL);
+  };
 
   const renderPage = () => {
     switch (currentPage) {
       case Page.HOME:
-        return <Home onNavigate={setCurrentPage} />;
+        return <Home onNavigate={setCurrentPage} onSelectProduct={handleProductSelect} />;
       case Page.PRODUCTS:
-        return <ProductsPage />;
+        return <ProductsPage onSelectProduct={handleProductSelect} />;
       case Page.ABOUT:
         return <About />;
       case Page.CONTACT:
@@ -97,8 +122,14 @@ const App: React.FC = () => {
         ) : (
           <ArticlesList onNavigate={setCurrentPage} onSelectArticle={setSelectedArticle} />
         );
+      case Page.PRODUCT_DETAIL:
+        return selectedProduct ? (
+          <ProductDetail product={selectedProduct} onNavigate={setCurrentPage} />
+        ) : (
+          <ProductsPage onSelectProduct={handleProductSelect} />
+        );
       default:
-        return <Home onNavigate={setCurrentPage} />;
+        return <Home onNavigate={setCurrentPage} onSelectProduct={handleProductSelect} />;
     }
   };
 

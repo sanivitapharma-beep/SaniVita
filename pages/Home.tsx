@@ -1,17 +1,16 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Page, Product } from '../types';
 import { ArrowRight, Activity, ShieldCheck, Leaf } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
-import ProductModal from '../components/ProductModal';
 import { products } from '../data/products';
 
 interface HomeProps {
   onNavigate: (page: Page) => void;
+  onSelectProduct: (product: Product) => void;
 }
 
-const Home: React.FC<HomeProps> = ({ onNavigate }) => {
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+const Home: React.FC<HomeProps> = ({ onNavigate, onSelectProduct }) => {
   const featuredProducts = products.slice(0, 3);
 
   return (
@@ -119,7 +118,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
               <ProductCard 
                 key={product.id} 
                 product={product} 
-                onViewDetails={setSelectedProduct}
+                onViewDetails={onSelectProduct}
               />
             ))}
           </div>
@@ -134,14 +133,6 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
           </div>
         </div>
       </section>
-
-      {/* Product Detail Modal */}
-      {selectedProduct && (
-        <ProductModal 
-          product={selectedProduct} 
-          onClose={() => setSelectedProduct(null)} 
-        />
-      )}
     </div>
   );
 };

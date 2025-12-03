@@ -35,5 +35,6 @@ export enum Page {
   CONTACT = 'contact',
   ADVISOR = 'advisor',
   ARTICLES = 'articles',
-  ARTICLE_DETAIL = 'article_detail'
+  ARTICLE_DETAIL = 'article_detail',
+  PRODUCT_DETAIL = 'product_detail'
 }

@@ -24,6 +24,13 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
     setIsOpen(false);
   };
 
+  const isNavItemActive = (itemValue: Page) => {
+      if (currentPage === itemValue) return true;
+      if (itemValue === Page.ARTICLES && currentPage === Page.ARTICLE_DETAIL) return true;
+      if (itemValue === Page.PRODUCTS && currentPage === Page.PRODUCT_DETAIL) return true;
+      return false;
+  };
+
   return (
     <nav className="sticky top-0 z-50 bg-primary-900/95 backdrop-blur-md shadow-lg border-b border-primary-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -53,7 +60,7 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
                 key={item.value}
                 onClick={() => handleNav(item.value)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                  currentPage === item.value || (item.value === Page.ARTICLES && currentPage === Page.ARTICLE_DETAIL)
+                  isNavItemActive(item.value)
                     ? 'bg-primary-800 text-white shadow-sm ring-2 ring-secondary-500'
                     : 'text-primary-100 hover:text-white hover:bg-primary-800'
                 }`}
@@ -97,7 +104,7 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
                 key={item.value}
                 onClick={() => handleNav(item.value)}
                 className={`block w-full text-right px-4 py-3 rounded-lg text-base font-medium ${
-                  currentPage === item.value || (item.value === Page.ARTICLES && currentPage === Page.ARTICLE_DETAIL)
+                  isNavItemActive(item.value)
                     ? 'bg-primary-800 text-white ring-1 ring-secondary-500'
                     : 'text-primary-100 hover:bg-primary-800 hover:text-white'
                 }`}

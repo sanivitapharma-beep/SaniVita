@@ -3,13 +3,15 @@ import React, { useState } from 'react';
 import { products } from '../data/products';
 import { Product } from '../types';
 import ProductCard from '../components/ProductCard';
-import ProductModal from '../components/ProductModal';
 import { Search, Filter } from 'lucide-react';
 
-const ProductsPage: React.FC = () => {
+interface ProductsPageProps {
+  onSelectProduct: (product: Product) => void;
+}
+
+const ProductsPage: React.FC<ProductsPageProps> = ({ onSelectProduct }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   const categories = ['all', ...Array.from(new Set(products.map(p => p.category)))];
 
@@ -88,7 +90,7 @@ const ProductsPage: React.FC = () => {
                 <ProductCard 
                     key={product.id} 
                     product={product} 
-                    onViewDetails={setSelectedProduct}
+                    onViewDetails={onSelectProduct}
                 />
             ))}
             </div>
@@ -102,14 +104,6 @@ const ProductsPage: React.FC = () => {
             </div>
         )}
       </div>
-
-      {/* Product Detail Modal */}
-      {selectedProduct && (
-        <ProductModal 
-          product={selectedProduct} 
-          onClose={() => setSelectedProduct(null)} 
-        />
-      )}
     </div>
   );
 };
