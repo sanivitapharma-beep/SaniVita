@@ -201,20 +201,6 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onNavigate }) =>
             </div>
 
         </div>
-
-        {/* CTA */}
-        <div className="mt-12 text-center bg-gradient-to-r from-primary-900 to-primary-800 rounded-3xl p-8 md:p-12 text-white shadow-lg relative overflow-hidden group cursor-pointer" onClick={() => onNavigate(Page.ADVISOR)}>
-            <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl group-hover:bg-white/10 transition-colors"></div>
-            <div className="relative z-10">
-                <h2 className="text-2xl md:text-3xl font-bold mb-4">هل لديك استفسار صحي؟</h2>
-                <p className="text-primary-100 mb-8 max-w-xl mx-auto">
-                    مستشارنا الذكي جاهز للإجابة على أسئلتك ومساعدتك في اختيار المنتجات المناسبة لحالتك الصحية.
-                </p>
-                <button className="bg-secondary-500 hover:bg-secondary-600 text-white px-8 py-3 rounded-xl font-bold shadow-lg transition-transform active:scale-95">
-                    استشر الآن مجاناً
-                </button>
-            </div>
-        </div>
       </div>
     </div>
   );

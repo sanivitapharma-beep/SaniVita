@@ -1,4 +1,5 @@
 
+
 export interface Product {
   id: string;
   name: string;
@@ -33,7 +34,6 @@ export enum Page {
   PRODUCTS = 'products',
   ABOUT = 'about',
   CONTACT = 'contact',
-  ADVISOR = 'advisor',
   ARTICLES = 'articles',
   ARTICLE_DETAIL = 'article_detail',
   PRODUCT_DETAIL = 'product_detail'

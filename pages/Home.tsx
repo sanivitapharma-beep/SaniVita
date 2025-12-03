@@ -56,12 +56,6 @@ const Home: React.FC<HomeProps> = ({ onNavigate, onSelectProduct }) => {
                   استكشف منتجاتنا
                   <ArrowRight className="w-5 h-5" />
                 </button>
-                <button 
-                  onClick={() => onNavigate(Page.ADVISOR)}
-                  className="bg-primary-900 hover:bg-primary-800 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-md transition-all hover:scale-105"
-                >
-                  استشر الخبير الذكي
-                </button>
               </div>
             </div>
             

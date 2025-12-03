@@ -6,7 +6,6 @@ import Home from './pages/Home';
 import ProductsPage from './pages/Products';
 import About from './pages/About';
 import Contact from './pages/Contact';
-import SmartAdvisor from './pages/SmartAdvisor';
 import ArticlesList from './pages/ArticlesList';
 import ArticleDetail from './pages/ArticleDetail';
 import ProductDetail from './pages/ProductDetail';
@@ -113,8 +112,6 @@ const App: React.FC = () => {
         return <About />;
       case Page.CONTACT:
         return <Contact />;
-      case Page.ADVISOR:
-        return <SmartAdvisor />;
       case Page.ARTICLES:
         return <ArticlesList onNavigate={setCurrentPage} onSelectArticle={setSelectedArticle} />;
       case Page.ARTICLE_DETAIL:

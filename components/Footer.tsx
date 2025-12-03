@@ -42,7 +42,6 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <li><button onClick={() => onNavigate(Page.ABOUT)} className="text-primary-200 hover:text-white transition-colors">من نحن</button></li>
               <li><button onClick={() => onNavigate(Page.PRODUCTS)} className="text-primary-200 hover:text-white transition-colors">منتجاتنا</button></li>
               <li><button onClick={() => onNavigate(Page.ARTICLES)} className="text-primary-200 hover:text-white transition-colors">المقالات</button></li>
-              <li><button onClick={() => onNavigate(Page.ADVISOR)} className="text-primary-200 hover:text-white transition-colors">المستشار الذكي</button></li>
             </ul>
           </div>
 

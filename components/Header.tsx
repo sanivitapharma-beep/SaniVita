@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Menu, X, Pill } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { Page } from '../types';
 
 interface HeaderProps {
@@ -68,19 +68,6 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
                 {item.label}
               </button>
             ))}
-            
-            {/* CTA Button for AI Advisor */}
-            <button
-              onClick={() => handleNav(Page.ADVISOR)}
-              className={`mr-4 flex items-center gap-2 px-5 py-2.5 rounded-full font-bold text-sm transition-all shadow-md hover:shadow-lg ${
-                currentPage === Page.ADVISOR 
-                ? 'bg-secondary-500 text-white'
-                : 'bg-gradient-to-r from-primary-700 to-accent-600 text-white hover:scale-105 border border-primary-600'
-              }`}
-            >
-              <Pill className="w-4 h-4" />
-              مستشارك الذكي
-            </button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -112,13 +99,6 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
                 {item.label}
               </button>
             ))}
-            <button
-               onClick={() => handleNav(Page.ADVISOR)}
-               className="w-full mt-4 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-secondary-500 text-white font-bold shadow-md active:scale-95 transition-transform"
-            >
-              <Pill className="w-5 h-5" />
-              مستشارك الطبي الذكي
-            </button>
           </div>
         </div>
       )}

@@ -228,7 +228,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onNavigate }) =>
             <div className="bg-slate-50 p-8 md:p-12 text-center border-t border-slate-100">
                 <h3 className="text-2xl font-bold text-slate-900 mb-4">هل لديك استفسار عن هذا المنتج؟</h3>
                 <p className="text-slate-500 mb-8 max-w-xl mx-auto">
-                    فريقنا الطبي ومستشارك الذكي جاهزون للإجابة على جميع تساؤلاتك حول الجرعات وطريقة الاستخدام.
+                    فريقنا الطبي جاهز للإجابة على جميع تساؤلاتك حول الجرعات وطريقة الاستخدام.
                 </p>
                 <div className="flex flex-wrap justify-center gap-4">
                     <button 
@@ -236,12 +236,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onNavigate }) =>
                         className="bg-primary-600 hover:bg-primary-700 text-white px-8 py-3 rounded-xl font-bold shadow-md transition-transform active:scale-95"
                     >
                         تواصل معنا
-                    </button>
-                    <button 
-                        onClick={() => onNavigate(Page.ADVISOR)}
-                        className="bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 px-8 py-3 rounded-xl font-bold shadow-sm transition-colors"
-                    >
-                        استشر الخبير الذكي
                     </button>
                 </div>
             </div>
