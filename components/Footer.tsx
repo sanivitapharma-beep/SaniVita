@@ -17,7 +17,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           <div>
             <div className="flex items-center mb-6">
               <img 
-                  src="https://lh3.googleusercontent.com/d/1PoUfI0MTa-Ri7cInwEAGejaEXb9jC9oP" 
+                  src="https://lh3.googleusercontent.com/d/1uNrswnyenPwKrAcEr8t1JduTJPjNkzo3" 
                   alt="SaniVita Logo" 
                   referrerPolicy="no-referrer"
                   className="h-10 w-10 rounded-lg mr-3 shadow-md object-cover bg-white"

@@ -35,7 +35,7 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
             onClick={() => handleNav(Page.HOME)}
           >
             <img 
-              src="https://lh3.googleusercontent.com/d/1PoUfI0MTa-Ri7cInwEAGejaEXb9jC9oP" 
+              src="https://lh3.googleusercontent.com/d/1uNrswnyenPwKrAcEr8t1JduTJPjNkzo3" 
               alt="SaniVita Logo" 
               referrerPolicy="no-referrer"
               className="h-12 w-12 rounded-xl shadow-lg group-hover:scale-105 transition-transform duration-300 object-cover bg-white"
