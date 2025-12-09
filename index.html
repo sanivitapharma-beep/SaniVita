@@ -33,47 +33,48 @@
     <script>
       tailwind.config = {
         theme: {
+          container: {
+            center: true,
+            padding: '1rem',
+          },
           extend: {
             fontFamily: {
               sans: ['Tajawal', 'sans-serif'],
             },
             colors: {
               primary: {
-                50: '#eef0ff',
-                100: '#e0e3ff',
-                200: '#c2c9ff',
-                300: '#94a0ff',
-                400: '#6070fa',
-                500: '#4552e6', 
-                600: '#2e3192', // Base Dark Blue #2e3192
-                700: '#25277a',
-                800: '#1f2163',
-                900: '#1a1b52',
-                950: '#0f1035',
+                50: '#EEF2FF',
+                100: '#E0E7FF',
+                200: '#C7D2FE',
+                300: '#A5B4FC',
+                400: '#818CF8',
+                500: '#4F46E5', // Standard Indigo
+                600: '#2E3192', // Brand Dark Blue (Stronger)
+                700: '#25287A',
+                800: '#1E205D',
+                900: '#11123D', // Very dark for top bar
+                950: '#0B0C29',
               },
               secondary: {
-                50: '#fff8eb',
-                100: '#ffecd6',
-                200: '#ffd5ad',
-                300: '#ffbd85',
-                400: '#ffa55c',
-                500: '#fd9f19', // Base Orange #fd9f19
-                600: '#e68200',
-                700: '#cc6a00',
-                800: '#a35000',
-                900: '#854000',
-              },
-              accent: {
-                50: '#e0f7ff',
-                100: '#b3ecff',
-                200: '#80dfff',
-                300: '#4dd2ff',
-                400: '#1ac5ff',
-                500: '#029ae2', // Base Light Blue #029ae2
-                600: '#027bb5',
-                700: '#025c87',
-                800: '#013d5a',
-                900: '#011f2d',
+                50: '#FFF7ED',
+                100: '#FFEDD5',
+                200: '#FED7AA',
+                300: '#FDBA74',
+                400: '#FB923C',
+                500: '#F97316', // Vibrant Orange for CTAs
+                600: '#EA580C',
+                700: '#C2410C',
+                800: '#9A3412',
+                900: '#7C2D12',
+              }
+            },
+            animation: {
+              'fade-in-down': 'fadeInDown 0.3s ease-out',
+            },
+            keyframes: {
+              fadeInDown: {
+                '0%': { opacity: '0', transform: 'translateY(-10px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
               }
             }
           },
