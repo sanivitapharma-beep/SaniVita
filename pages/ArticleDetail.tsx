@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Article, Page } from '../types';
 import { Calendar, User, Clock, ArrowRight, Tag, Facebook, Twitter, Linkedin, Link as LinkIcon, Check, MessageCircle } from 'lucide-react';
+import SEO from '../components/SEO';
 
 interface ArticleDetailProps {
   article: Article;
@@ -58,7 +59,13 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onNavigate }) =>
 
   return (
     <div className="min-h-screen bg-white pb-20">
-      
+      <SEO 
+        title={article.title}
+        description={article.excerpt}
+        keywords={`مقالات طبية, ${article.category}, صحة, ${article.title}`}
+        image={article.image}
+      />
+
       {/* Hero Header */}
       <div className="relative h-[400px] md:h-[500px] w-full">
         <img 

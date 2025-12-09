@@ -4,6 +4,7 @@ import { Page, Product } from '../types';
 import { ArrowRight, Activity, ShieldCheck, Leaf } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
 import { products } from '../data/products';
+import SEO from '../components/SEO';
 
 interface HomeProps {
   onNavigate: (page: Page) => void;
@@ -15,13 +16,20 @@ const Home: React.FC<HomeProps> = ({ onNavigate, onSelectProduct }) => {
 
   return (
     <div className="flex flex-col">
+      <SEO 
+        title="الرئيسية - مكملات غذائية لصحة العائلة"
+        description="اكتشف مجموعة سانيفيتا فارما من المكملات الغذائية الطبيعية والآمنة. منتجاتنا تشمل ابسيمارتا، لابينسيرون، وابينسيكال لتعزيز المناعة وصحة الأطفال والأسرة."
+        keywords="سانيفيتا, مكملات غذائية, مناعة الأطفال, فيتامينات, صحة الأسرة, ابسيمارتا, لابينسيرون"
+        image="https://lh3.googleusercontent.com/d/19fGQqUwDcQKOh-ZEyDxPFWoZmV3Nd72V"
+      />
+
       {/* Hero Section */}
       <section className="relative min-h-[600px] lg:min-h-[750px] flex items-center justify-center overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <img 
             src="https://lh3.googleusercontent.com/d/19fGQqUwDcQKOh-ZEyDxPFWoZmV3Nd72V" 
-            alt="SaniVita Hero Background" 
+            alt="عائلة سعيدة تستمتع بصحة جيدة مع منتجات سانيفيتا فارما" 
             referrerPolicy="no-referrer"
             className="w-full h-full object-cover object-[70%_center]"
           />
@@ -45,7 +53,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, onSelectProduct }) => {
               </h1>
               
               <p className="text-lg lg:text-xl text-slate-600 leading-relaxed max-w-2xl font-medium">
-                في SaniVita Pharma، نمزج العلم بالطبيعة لنقدم لك مكملات غذائية عالية الجودة تساعدك على عيش حياة أكثر صحة وحيوية.
+                في SaniVita Pharma، نمزج العلم بالطبيعة لنقدم لك مكملات غذائية عالية الجودة تساعدك على عيش حياة أكثر صحة وحيوية. منتجاتنا مصممة خصيصاً لرفع المناعة ودعم النمو الصحي.
               </p>
               
               <div className="flex flex-wrap gap-4 pt-2">
@@ -70,14 +78,26 @@ const Home: React.FC<HomeProps> = ({ onNavigate, onSelectProduct }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl font-bold text-primary-900 mb-4">لماذا تختار SaniVita Pharma؟</h2>
-            <p className="text-slate-500 text-lg">نلتزم بتقديم منتجات تفوق توقعاتك من حيث الجودة والفعالية</p>
+            <p className="text-slate-500 text-lg">نلتزم بتقديم منتجات تفوق توقعاتك من حيث الجودة والفعالية، لضمان صحة أفضل لك ولأسرتك.</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { icon: ShieldCheck, title: 'جودة مضمونة', text: 'جميع منتجاتنا خاضعة لأدق اختبارات الجودة العالمية وحاصلة على التراخيص اللازمة.' },
-              { icon: Leaf, title: 'مكونات طبيعية', text: 'نستخدم أجود الخامات الطبيعية لضمان أقصى استفادة لجسمك بأمان تام.' },
-              { icon: Activity, title: 'فعالية مثبتة', text: 'تركيبات علمية متطورة تضمن لك الحصول على النتائج المرجوة لصحتك.' },
+              { 
+                icon: ShieldCheck, 
+                title: 'جودة عالمية مضمونة', 
+                text: 'جميع منتجاتنا خاضعة لأدق اختبارات الجودة العالمية وحاصلة على تراخيص وزارة الصحة، لضمان حصولك على منتج آمن وفعال 100%.' 
+              },
+              { 
+                icon: Leaf, 
+                title: 'مكونات طبيعية ونقية', 
+                text: 'نختار بعناية أجود الخامات الطبيعية من مصادر موثوقة، خالية من الإضافات الضارة، لضمان أقصى استفادة لجسمك بأمان تام.' 
+              },
+              { 
+                icon: Activity, 
+                title: 'فعالية علمية مثبتة', 
+                text: 'نعتمد على أحدث الأبحاث العلمية في تطوير تركيباتنا المتطورة التي تضمن لك ولطفلك الحصول على النتائج المرجوة في وقت قياسي.' 
+              },
             ].map((feature, idx) => (
               <div key={idx} className="bg-slate-50 p-8 rounded-2xl hover:bg-white hover:shadow-xl transition-all duration-300 border border-transparent hover:border-accent-200 group">
                 <div className="bg-white w-16 h-16 rounded-xl shadow-sm flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
@@ -97,7 +117,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, onSelectProduct }) => {
           <div className="flex justify-between items-end mb-12">
             <div>
               <h2 className="text-3xl font-bold text-primary-900 mb-2">الأكثر مبيعاً</h2>
-              <p className="text-slate-500">منتجات يثق بها عملاؤنا</p>
+              <p className="text-slate-500">منتجات يثق بها آلاف العملاء والأطباء</p>
             </div>
             <button 
               onClick={() => onNavigate(Page.PRODUCTS)}

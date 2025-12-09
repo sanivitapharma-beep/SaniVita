@@ -7,6 +7,7 @@ import {
     Heart, Sparkles, Zap, Package, Facebook, Twitter, MessageCircle, 
     Link as LinkIcon, Check, Linkedin, ChevronRight, ChevronLeft 
 } from 'lucide-react';
+import SEO from '../components/SEO';
 
 interface ProductDetailProps {
   product: Product;
@@ -79,6 +80,12 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onNavigate, onSe
 
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
+      <SEO 
+        title={product.name}
+        description={product.description}
+        keywords={`${product.name}, ${product.category}, سانيفيتا, مكمل غذائي, ${product.benefits.join(', ')}`}
+        image={product.image}
+      />
       
       {/* Hero / Header Section */}
       <div className="bg-gradient-to-br from-primary-500 to-primary-700 pt-28 pb-32 relative overflow-hidden">
@@ -126,7 +133,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onNavigate, onSe
                         <div className="relative bg-white/10 backdrop-blur-md rounded-[2.5rem] p-8 border border-white/20 shadow-2xl">
                             <img 
                                 src={product.image} 
-                                alt={product.name} 
+                                alt={`${product.name} - مكمل غذائي ل${product.category}`}
                                 referrerPolicy="no-referrer"
                                 className="w-full h-64 md:h-80 object-contain drop-shadow-lg transform group-hover:scale-105 transition-transform duration-500"
                             />
@@ -231,7 +238,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onNavigate, onSe
                             <div className="prose prose-lg text-slate-600 leading-8">
                                 <p>{product.description}</p>
                                 <p className="mt-4">
-                                    يتميز هذا المنتج بتركيبته الفريدة التي تجمع بين الفعالية والأمان، مصمم خصيصاً لتلبية احتياجات {product.category} بكفاءة عالية.
+                                    يتميز هذا المنتج بتركيبته الفريدة التي تجمع بين الفعالية والأمان، مصمم خصيصاً لتلبية احتياجات {product.category} بكفاءة عالية. منتج موثوق يوصي به العديد من الأطباء لدعم صحة طفلك ونموه السليم.
                                 </p>
                             </div>
                         </div>
@@ -242,7 +249,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onNavigate, onSe
                                 <span>متوفر الآن</span>
                              </div>
                              <p className="text-primary-600 text-sm">
-                                يمكنك العثور على {product.name} في جميع الصيدليات الكبرى. اطلب المنتج بالاسم للحصول على العبوة الأصلية.
+                                يمكنك العثور على {product.name} في جميع الصيدليات الكبرى. اطلب المنتج بالاسم للحصول على العبوة الأصلية لضمان الجودة.
                              </p>
                         </div>
                     </div>
@@ -254,7 +261,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onNavigate, onSe
             <div className="bg-slate-50 p-8 md:p-12 text-center border-t border-slate-100">
                 <h3 className="text-2xl font-bold text-slate-900 mb-4">هل لديك استفسار عن هذا المنتج؟</h3>
                 <p className="text-slate-500 mb-8 max-w-xl mx-auto">
-                    فريقنا الطبي جاهز للإجابة على جميع تساؤلاتك حول الجرعات وطريقة الاستخدام.
+                    فريقنا الطبي جاهز للإجابة على جميع تساؤلاتك حول الجرعات وطريقة الاستخدام لضمان أفضل النتائج.
                 </p>
                 <div className="flex flex-wrap justify-center gap-4">
                     <button 

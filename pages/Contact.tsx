@@ -1,9 +1,16 @@
 import React from 'react';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import SEO from '../components/SEO';
 
 const Contact: React.FC = () => {
   return (
     <div className="min-h-screen bg-white py-12">
+      <SEO 
+        title="تواصل معنا - سانيفيتا فارما"
+        description="تواصل مع فريق سانيفيتا فارما. نحن هنا للإجابة على استفساراتك حول منتجاتنا أو لتقديم الدعم والمساعدة."
+        keywords="اتصل بنا, سانيفيتا, خدمة العملاء, عنوان الشركة"
+      />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h1 className="text-4xl font-bold text-slate-900 mb-4">تواصل معنا</h1>
@@ -51,7 +58,7 @@ const Contact: React.FC = () => {
                </div>
                <div>
                  <h3 className="text-xl font-bold text-slate-800 mb-2">مقر الشركة</h3>
-                 <p className="text-slate-500">123 شارع الصحة، المنطقة الصناعية<br/>القاهرة الجديدة، مصر</p>
+                 <p className="text-slate-500">26 شارع محمود البكري مدينة الجندول الزاويه الحمراء القاهرة</p>
                </div>
             </div>
 
@@ -61,7 +68,7 @@ const Contact: React.FC = () => {
                </div>
                <div>
                  <h3 className="text-xl font-bold text-slate-800 mb-2">اتصل بنا</h3>
-                 <p className="text-slate-500 text-lg dir-ltr text-right">+20 123 456 7890</p>
+                 <p className="text-slate-500 text-lg dir-ltr text-right">+20 1009760524</p>
                  <p className="text-slate-400 text-sm mt-1">يومياً من 9 صباحاً حتى 6 مساءً</p>
                </div>
             </div>
@@ -81,7 +88,7 @@ const Contact: React.FC = () => {
             <div className="rounded-3xl overflow-hidden h-64 bg-slate-200 shadow-inner relative">
                 <img 
                     src="https://maps.googleapis.com/maps/api/staticmap?center=30.0444,31.2357&zoom=14&size=600x300&sensor=false&key=YOUR_API_KEY_HERE" 
-                    alt="Map Location" 
+                    alt="موقع شركة سانيفيتا فارما على الخريطة" 
                     className="w-full h-full object-cover opacity-80 grayscale hover:grayscale-0 transition-all duration-500"
                     // Fallback since no key
                     onError={(e) => {

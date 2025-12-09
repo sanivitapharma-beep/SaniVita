@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { articles } from '../data/articles';
 import { Article, Page } from '../types';
 import { Calendar, User, Clock, ArrowLeft, Search } from 'lucide-react';
+import SEO from '../components/SEO';
 
 interface ArticlesListProps {
   onNavigate: (page: Page) => void;
@@ -23,6 +24,12 @@ const ArticlesList: React.FC<ArticlesListProps> = ({ onNavigate, onSelectArticle
 
   return (
     <div className="min-h-screen bg-slate-50 py-12">
+      <SEO 
+        title="المقالات الطبية - نصائح صحية موثوقة"
+        description="اقرأ أحدث المقالات الطبية والنصائح الصحية من خبراء سانيفيتا فارما. معلومات عن المناعة، التغذية، صحة الأطفال، والجمال."
+        keywords="مقالات طبية, مدونة صحية, نصائح تغذية, صحة الطفل, مقالات سانيفيتا"
+      />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="text-center mb-16">

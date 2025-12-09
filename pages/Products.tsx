@@ -4,6 +4,7 @@ import { products } from '../data/products';
 import { Product } from '../types';
 import ProductCard from '../components/ProductCard';
 import { Search, Filter } from 'lucide-react';
+import SEO from '../components/SEO';
 
 interface ProductsPageProps {
   onSelectProduct: (product: Product) => void;
@@ -23,6 +24,11 @@ const ProductsPage: React.FC<ProductsPageProps> = ({ onSelectProduct }) => {
 
   return (
     <div className="min-h-screen bg-slate-50 pb-12">
+      <SEO 
+        title="منتجاتنا - مكملات غذائية لكل احتياجاتك"
+        description="تصفح قائمة منتجات سانيفيتا فارما الشاملة. مكملات غذائية للمناعة، العظام، صحة الأطفال، والجمال. منتجات طبيعية وفعالة."
+        keywords="منتجات سانيفيتا, مكملات مناعة, فيتامين أطفال, حديد, كالسيوم, أدوية شراب"
+      />
       
       {/* Hero Section with Background Image */}
       <div className="relative h-[400px] w-full mb-8 flex items-center justify-center overflow-hidden">
@@ -30,7 +36,7 @@ const ProductsPage: React.FC<ProductsPageProps> = ({ onSelectProduct }) => {
         <div className="absolute inset-0 z-0">
             <img 
                 src="https://lh3.googleusercontent.com/d/1AsWmNwnvbS3rRC4cIOrcVsqzJ-6FQXfL" 
-                alt="Products Background" 
+                alt="تشكيلة منتجات سانيفيتا فارما للمكملات الغذائية" 
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover"
             />
