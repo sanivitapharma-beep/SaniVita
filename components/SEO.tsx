@@ -43,6 +43,7 @@ const SEO: React.FC<SEOProps> = ({ title, description, keywords, image }) => {
     updateOg('og:description', description);
     if (image) updateOg('og:image', image);
     updateOg('og:type', 'website');
+    updateOg('og:locale', 'ar_EG'); // Set locale to Egypt
 
     // Twitter
     updateMeta('twitter:card', 'summary_large_image');
