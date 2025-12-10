@@ -9,14 +9,30 @@ import Contact from './pages/Contact';
 import ArticlesList from './pages/ArticlesList';
 import ArticleDetail from './pages/ArticleDetail';
 import ProductDetail from './pages/ProductDetail';
+import AdminDashboard from './pages/AdminDashboard';
 import ScrollToTop from './components/ScrollToTop';
 import { Page, Article, Product } from './types';
-import { articles } from './data/articles';
 import { products } from './data/products';
+import { ArticleProvider, useArticles } from './context/ArticleContext';
 
-const App: React.FC = () => {
+// Helper component to find article within context for detail view
+const ArticleDetailWrapper: React.FC<{ 
+    articleId: string | null; 
+    onNavigate: (page: Page) => void;
+}> = ({ articleId, onNavigate }) => {
+    const { articles } = useArticles();
+    const article = articleId ? articles.find(a => a.id === articleId) : null;
+
+    if (!article) {
+        // If not found, go back to list
+        return <ArticlesList onNavigate={onNavigate} onSelectArticle={() => {}} />;
+    }
+    return <ArticleDetail article={article} onNavigate={onNavigate} />;
+};
+
+const AppContent: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<Page>(Page.HOME);
-  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
+  const [selectedArticleId, setSelectedArticleId] = useState<string | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   // Initialize state from URL parameters on mount
@@ -26,11 +42,8 @@ const App: React.FC = () => {
     const idParam = params.get('id');
 
     if (pageParam === 'article_detail' && idParam) {
-      const foundArticle = articles.find(a => a.id === idParam);
-      if (foundArticle) {
-        setSelectedArticle(foundArticle);
+        setSelectedArticleId(idParam);
         setCurrentPage(Page.ARTICLE_DETAIL);
-      }
     } else if (pageParam === 'product_detail' && idParam) {
       const foundProduct = products.find(p => p.id === idParam);
       if (foundProduct) {
@@ -48,11 +61,8 @@ const App: React.FC = () => {
       const idParam = params.get('id');
 
       if (pageParam === 'article_detail' && idParam) {
-        const foundArticle = articles.find(a => a.id === idParam);
-        if (foundArticle) {
-          setSelectedArticle(foundArticle);
+          setSelectedArticleId(idParam);
           setCurrentPage(Page.ARTICLE_DETAIL);
-        }
       } else if (pageParam === 'product_detail' && idParam) {
         const foundProduct = products.find(p => p.id === idParam);
         if (foundProduct) {
@@ -61,11 +71,11 @@ const App: React.FC = () => {
         }
       } else if (pageParam && Object.values(Page).includes(pageParam as Page)) {
         setCurrentPage(pageParam as Page);
-        setSelectedArticle(null);
+        setSelectedArticleId(null);
         setSelectedProduct(null);
       } else {
         setCurrentPage(Page.HOME);
-        setSelectedArticle(null);
+        setSelectedArticleId(null);
         setSelectedProduct(null);
       }
     };
@@ -81,9 +91,9 @@ const App: React.FC = () => {
     const url = new URL(window.location.href);
     url.search = ''; // Clear existing params
 
-    if (currentPage === Page.ARTICLE_DETAIL && selectedArticle) {
+    if (currentPage === Page.ARTICLE_DETAIL && selectedArticleId) {
       url.searchParams.set('page', 'article_detail');
-      url.searchParams.set('id', selectedArticle.id);
+      url.searchParams.set('id', selectedArticleId);
     } else if (currentPage === Page.PRODUCT_DETAIL && selectedProduct) {
       url.searchParams.set('page', 'product_detail');
       url.searchParams.set('id', selectedProduct.id);
@@ -95,12 +105,17 @@ const App: React.FC = () => {
     if (window.location.href !== url.toString()) {
       window.history.pushState({}, '', url);
     }
-  }, [currentPage, selectedArticle, selectedProduct]);
+  }, [currentPage, selectedArticleId, selectedProduct]);
 
   const handleProductSelect = (product: Product) => {
       setSelectedProduct(product);
       setCurrentPage(Page.PRODUCT_DETAIL);
   };
+
+  const handleArticleSelect = (article: Article) => {
+      setSelectedArticleId(article.id);
+      setCurrentPage(Page.ARTICLE_DETAIL);
+  }
 
   const renderPage = () => {
     switch (currentPage) {
@@ -112,14 +127,12 @@ const App: React.FC = () => {
         return <About />;
       case Page.CONTACT:
         return <Contact />;
+      case Page.ADMIN:
+        return <AdminDashboard onNavigate={setCurrentPage} />;
       case Page.ARTICLES:
-        return <ArticlesList onNavigate={setCurrentPage} onSelectArticle={setSelectedArticle} />;
+        return <ArticlesList onNavigate={setCurrentPage} onSelectArticle={handleArticleSelect} />;
       case Page.ARTICLE_DETAIL:
-        return selectedArticle ? (
-          <ArticleDetail article={selectedArticle} onNavigate={setCurrentPage} />
-        ) : (
-          <ArticlesList onNavigate={setCurrentPage} onSelectArticle={setSelectedArticle} />
-        );
+        return <ArticleDetailWrapper articleId={selectedArticleId} onNavigate={setCurrentPage} />;
       case Page.PRODUCT_DETAIL:
         return selectedProduct ? (
           <ProductDetail 
@@ -137,16 +150,30 @@ const App: React.FC = () => {
 
   return (
     <div className="flex flex-col min-h-screen font-sans" dir="rtl">
-      <Header currentPage={currentPage} onNavigate={setCurrentPage} />
+      {/* Hide header on admin page for cleaner look, optional */}
+      {currentPage !== Page.ADMIN && (
+          <Header currentPage={currentPage} onNavigate={setCurrentPage} />
+      )}
       
       <main className="flex-grow">
         {renderPage()}
       </main>
 
-      <Footer onNavigate={setCurrentPage} />
+      {/* Hide footer on admin page */}
+      {currentPage !== Page.ADMIN && (
+          <Footer onNavigate={setCurrentPage} />
+      )}
       <ScrollToTop />
     </div>
   );
+};
+
+const App: React.FC = () => {
+    return (
+        <ArticleProvider>
+            <AppContent />
+        </ArticleProvider>
+    );
 };
 
 export default App;

@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Facebook, Twitter, Instagram, Mail, Phone, MapPin } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Mail, Phone, MapPin, Lock } from 'lucide-react';
 import { Page } from '../types';
 
 interface FooterProps {
@@ -68,9 +68,16 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         
         <div className="border-t border-primary-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-primary-400">
           <p>&copy; {new Date().getFullYear()} SaniVita Pharma. جميع الحقوق محفوظة.</p>
-          <div className="flex space-x-6 space-x-reverse mt-4 md:mt-0">
+          <div className="flex items-center space-x-6 space-x-reverse mt-4 md:mt-0">
             <a href="#" className="hover:text-white">سياسة الخصوصية</a>
             <a href="#" className="hover:text-white">الشروط والأحكام</a>
+            <button 
+                onClick={() => onNavigate(Page.ADMIN)} 
+                className="hover:text-white opacity-50 hover:opacity-100 flex items-center gap-1 transition-all"
+                title="دخول المدير"
+            >
+                <Lock className="w-3 h-3" />
+            </button>
           </div>
         </div>
       </div>
