@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Product, Page } from '../types';
-import { products } from '../data/products';
+import { useProducts } from '../context/ProductContext';
 import { 
     ArrowRight, CheckCircle, Store, Tag, Info, Star, Wind, Shield, Activity, 
     Heart, Sparkles, Zap, Package, Facebook, Twitter, MessageCircle, 
@@ -16,6 +16,7 @@ interface ProductDetailProps {
 }
 
 const ProductDetail: React.FC<ProductDetailProps> = ({ product, onNavigate, onSelectProduct }) => {
+  const { products } = useProducts();
   const [copied, setCopied] = useState(false);
 
   // Scroll to top when component mounts or product changes

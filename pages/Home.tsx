@@ -3,7 +3,7 @@ import React from 'react';
 import { Page, Product } from '../types';
 import { ArrowRight, Activity, ShieldCheck, Leaf } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
-import { products } from '../data/products';
+import { useProducts } from '../context/ProductContext';
 import SEO from '../components/SEO';
 
 interface HomeProps {
@@ -12,6 +12,7 @@ interface HomeProps {
 }
 
 const Home: React.FC<HomeProps> = ({ onNavigate, onSelectProduct }) => {
+  const { products } = useProducts();
   const featuredProducts = products.slice(0, 3);
 
   return (

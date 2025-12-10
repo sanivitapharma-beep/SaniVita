@@ -12,8 +12,8 @@ import ProductDetail from './pages/ProductDetail';
 import AdminDashboard from './pages/AdminDashboard';
 import ScrollToTop from './components/ScrollToTop';
 import { Page, Article, Product } from './types';
-import { products } from './data/products';
 import { ArticleProvider, useArticles } from './context/ArticleContext';
+import { ProductProvider, useProducts } from './context/ProductContext';
 
 // Helper component to find article within context for detail view
 const ArticleDetailWrapper: React.FC<{ 
@@ -24,7 +24,6 @@ const ArticleDetailWrapper: React.FC<{
     const article = articleId ? articles.find(a => a.id === articleId) : null;
 
     if (!article) {
-        // If not found, go back to list
         return <ArticlesList onNavigate={onNavigate} onSelectArticle={() => {}} />;
     }
     return <ArticleDetail article={article} onNavigate={onNavigate} />;
@@ -34,6 +33,7 @@ const AppContent: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<Page>(Page.HOME);
   const [selectedArticleId, setSelectedArticleId] = useState<string | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const { products } = useProducts();
 
   // Initialize state from URL parameters on mount
   useEffect(() => {
@@ -82,7 +82,7 @@ const AppContent: React.FC = () => {
 
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
+  }, [products]);
 
   // Sync URL with state changes
   useEffect(() => {
@@ -101,7 +101,6 @@ const AppContent: React.FC = () => {
       url.searchParams.set('page', currentPage);
     }
 
-    // Only update history if the URL is different to avoid redundant entries
     if (window.location.href !== url.toString()) {
       window.history.pushState({}, '', url);
     }
@@ -150,7 +149,6 @@ const AppContent: React.FC = () => {
 
   return (
     <div className="flex flex-col min-h-screen font-sans" dir="rtl">
-      {/* Hide header on admin page for cleaner look, optional */}
       {currentPage !== Page.ADMIN && (
           <Header currentPage={currentPage} onNavigate={setCurrentPage} />
       )}
@@ -159,7 +157,6 @@ const AppContent: React.FC = () => {
         {renderPage()}
       </main>
 
-      {/* Hide footer on admin page */}
       {currentPage !== Page.ADMIN && (
           <Footer onNavigate={setCurrentPage} />
       )}
@@ -171,7 +168,9 @@ const AppContent: React.FC = () => {
 const App: React.FC = () => {
     return (
         <ArticleProvider>
-            <AppContent />
+            <ProductProvider>
+                <AppContent />
+            </ProductProvider>
         </ArticleProvider>
     );
 };

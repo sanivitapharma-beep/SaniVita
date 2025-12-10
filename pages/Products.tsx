@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { products } from '../data/products';
+import { useProducts } from '../context/ProductContext';
 import { Product } from '../types';
 import ProductCard from '../components/ProductCard';
 import { Search, Filter } from 'lucide-react';
@@ -11,6 +11,7 @@ interface ProductsPageProps {
 }
 
 const ProductsPage: React.FC<ProductsPageProps> = ({ onSelectProduct }) => {
+  const { products } = useProducts();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
 

@@ -1,9 +1,12 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, Bot, User, Sparkles, Loader2, Info } from 'lucide-react';
 import { ChatMessage } from '../types';
 import { sendMessageToGemini } from '../services/geminiService';
+import { useProducts } from '../context/ProductContext';
 
 const SmartAdvisor: React.FC = () => {
+  const { products } = useProducts();
   const [messages, setMessages] = useState<ChatMessage[]>([
     { role: 'model', text: 'أهلاً بك! أنا مساعد SaniVita الذكي. كيف يمكنني مساعدتك في اختيار المكمل الغذائي المناسب لصحتك اليوم؟' }
   ]);
@@ -33,7 +36,7 @@ const SmartAdvisor: React.FC = () => {
         // Create a placeholder for the AI response
         setMessages(prev => [...prev, { role: 'model', text: '' }]);
         
-        const stream = await sendMessageToGemini(userMessage);
+        const stream = await sendMessageToGemini(userMessage, products);
         let fullText = '';
         
         for await (const chunk of stream) {

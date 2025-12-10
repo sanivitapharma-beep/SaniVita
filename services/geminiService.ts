@@ -1,12 +1,16 @@
+
 import { GoogleGenAI, Chat, GenerateContentResponse } from "@google/genai";
-import { products } from '../data/products';
+import { Product } from '../types';
 
-// Helper to format product list for the AI context
-const productContext = products.map(p => 
-  `- ${p.name} (${p.category}): ${p.description}. الفوائد: ${p.benefits.join(', ')}`
-).join('\n');
+let chatInstance: Chat | null = null;
+let lastUsedProductsString: string = "";
 
-const SYSTEM_INSTRUCTION = `
+const generateSystemInstruction = (products: Product[]) => {
+  const productContext = products.map(p => 
+    `- ${p.name} (${p.category}): ${p.description}. الفوائد: ${p.benefits.join(', ')}. السعر: ${p.price || 'غير محدد'}`
+  ).join('\n');
+
+  return `
 أنت مساعد ذكي ومستشار صحي لشركة "SaniVita Pharma".
 دورك هو مساعدة العملاء في اختيار المكملات الغذائية المناسبة لهم من قائمة منتجاتنا، والإجابة عن الأسئلة الصحية العامة.
 
@@ -21,33 +25,34 @@ ${productContext}
 5. **تحذير هام:** يجب عليك دائماً إنهاء نصيحتك بجملة تنص على أنك ذكاء اصطناعي وأن نصيحتك لا تغني عن استشارة الطبيب المختص، خاصة في حالات الحمل أو الأمراض المزمنة.
 6. اجعل إجاباتك موجزة ومفيدة.
 `;
+}
 
-let chatInstance: Chat | null = null;
-
-export const getChatInstance = (): Chat => {
-  if (chatInstance) return chatInstance;
-
-  const apiKey = process.env.API_KEY || '';
-  // Fallback for demo purposes if no key provided, though strictly we rely on env
-  if (!apiKey) {
-      console.warn("API Key missing");
-  }
-
-  const ai = new GoogleGenAI({ apiKey });
+export const getChatInstance = (products: Product[]): Chat => {
+  const currentProductsString = JSON.stringify(products);
   
-  chatInstance = ai.chats.create({
-    model: 'gemini-2.5-flash',
-    config: {
-      systemInstruction: SYSTEM_INSTRUCTION,
-      temperature: 0.7,
-    },
-  });
+  if (!chatInstance || currentProductsString !== lastUsedProductsString) {
+      const apiKey = process.env.API_KEY || '';
+      if (!apiKey) {
+          console.warn("API Key missing");
+      }
+
+      const ai = new GoogleGenAI({ apiKey });
+      
+      chatInstance = ai.chats.create({
+        model: 'gemini-2.5-flash',
+        config: {
+          systemInstruction: generateSystemInstruction(products),
+          temperature: 0.7,
+        },
+      });
+      lastUsedProductsString = currentProductsString;
+  }
 
   return chatInstance;
 };
 
-export const sendMessageToGemini = async (message: string): Promise<AsyncGenerator<string, void, unknown>> => {
-    const chat = getChatInstance();
+export const sendMessageToGemini = async (message: string, products: Product[]): Promise<AsyncGenerator<string, void, unknown>> => {
+    const chat = getChatInstance(products);
     
     // Using sendMessageStream for better UX
     const result = await chat.sendMessageStream({ message });
