@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useArticles } from '../context/ArticleContext';
 import { Article, Page } from '../types';
-import { Trash2, Edit, Plus, Save, X, Image as ImageIcon, Lock } from 'lucide-react';
+import { Trash2, Edit, Plus, Save, X, Image as ImageIcon, Lock, LogOut } from 'lucide-react';
 
 interface AdminDashboardProps {
     onNavigate: (page: Page) => void;
@@ -116,15 +116,35 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigate }) => {
   return (
     <div className="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-slate-900">إدارة المقالات</h1>
-          <button 
-            onClick={handleAddNewClick}
-            className="bg-secondary-500 hover:bg-secondary-600 text-white px-6 py-2 rounded-xl font-bold flex items-center gap-2 shadow-md transition-transform active:scale-95"
-          >
-            <Plus className="w-5 h-5" />
-            مقال جديد
-          </button>
+        
+        {/* Dashboard Header */}
+        <div className="flex flex-col md:flex-row justify-between items-center mb-8 bg-white p-6 rounded-2xl shadow-sm border border-slate-100 gap-4">
+            <div className="flex items-center gap-4">
+                <div className="bg-primary-100 p-3 rounded-xl text-primary-600">
+                    <Lock className="w-6 h-6" />
+                </div>
+                <div>
+                    <h1 className="text-2xl font-bold text-slate-900">لوحة التحكم</h1>
+                    <p className="text-sm text-slate-500">مرحباً بك في منطقة الإدارة</p>
+                </div>
+            </div>
+            
+            <div className="flex items-center gap-3 w-full md:w-auto">
+                <button 
+                    onClick={() => onNavigate(Page.HOME)}
+                    className="flex-1 md:flex-none flex items-center justify-center gap-2 text-slate-500 hover:text-slate-700 font-bold px-4 py-2.5 rounded-xl hover:bg-slate-50 transition border border-transparent hover:border-slate-200"
+                >
+                    <LogOut className="w-4 h-4" />
+                    العودة للموقع
+                </button>
+                <button 
+                    onClick={handleAddNewClick}
+                    className="flex-1 md:flex-none bg-secondary-500 hover:bg-secondary-600 text-white px-6 py-2.5 rounded-xl font-bold flex items-center justify-center gap-2 shadow-md transition-transform active:scale-95"
+                >
+                    <Plus className="w-5 h-5" />
+                    <span>مقال جديد</span>
+                </button>
+            </div>
         </div>
 
         {/* Editor Form */}

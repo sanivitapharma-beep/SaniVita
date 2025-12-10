@@ -71,10 +71,13 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           <div className="flex items-center space-x-6 space-x-reverse mt-4 md:mt-0">
             <a href="#" className="hover:text-white">سياسة الخصوصية</a>
             <a href="#" className="hover:text-white">الشروط والأحكام</a>
+            
+            {/* The Hidden Admin Link - Made more discreet */}
             <button 
                 onClick={() => onNavigate(Page.ADMIN)} 
-                className="hover:text-white opacity-50 hover:opacity-100 flex items-center gap-1 transition-all"
+                className="opacity-20 hover:opacity-100 hover:text-red-400 transition-all duration-500 flex items-center gap-1 p-2"
                 title="دخول المدير"
+                aria-label="Admin Login"
             >
                 <Lock className="w-3 h-3" />
             </button>
