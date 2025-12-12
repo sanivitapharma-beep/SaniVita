@@ -64,6 +64,8 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onNavigate }) =>
         description={article.excerpt}
         keywords={`مقالات طبية, ${article.category}, صحة, ${article.title}`}
         image={article.image}
+        url={getShareUrl()}
+        type="article"
       />
 
       {/* Hero Header */}

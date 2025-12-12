@@ -86,6 +86,8 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onNavigate, onSe
         description={product.description}
         keywords={`${product.name}, ${product.category}, سانيفيتا, مكمل غذائي, ${product.benefits.join(', ')}`}
         image={product.image}
+        url={getShareUrl()}
+        type="product"
       />
       
       {/* Hero / Header Section */}
